@@ -3,15 +3,19 @@
  */
 /* globals CryptoJS */
 
+if (location.protocol === "https:") {
+  location.protocol = "http:";
+}
+
 $(function () {
   var valid = $("#valid > span").text();
 
-  ajax("http://" + location.host + "/photo.jpg", function () {
+  ajax("http://" + location.host + location.pathname + "photo.jpg", function () {
     var hash = shasum(this.response);
     $("#http > span").text(hash);
   });
 
-  ajax("https://" + location.host + "/photo.jpg", function () {
+  ajax("https://" + location.host + location.pathname + "photo.jpg", function () {
     var hash = shasum(this.response);
     $("#https > span").text(hash);
   });
