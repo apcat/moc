@@ -9,3 +9,7 @@ Mobile Network Optimization Checker
 -------------------
 * [jQuery](https://jquery.com/) 2.1.4
 * [crypto-js](https://code.google.com/p/crypto-js/) 3.1.2
+
+使用している API
+---------------
+* [IP-API.com - Free Geolocation API](http://ip-api.com/)

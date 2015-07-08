@@ -8,13 +8,19 @@ if (location.protocol === "https:") {
 }
 
 $(function () {
+  $.getJSON("http://ip-api.com/json").then(function (data) {
+    $("#ip").text(data.query);
+    $("#as").text(data.as);
+    $("#isp").text(data.isp);
+  });
+
   $("#ua").text(navigator.userAgent);
 
-  var valid = $("#valid > span").text();
+  var valid = $("#valid").text();
 
   function print(protocol) {
     return function () {
-      var $field = $("#" + protocol + " > span").text(hash);
+      var $field = $("#" + protocol).text(hash);
 
       if (this.status !== 200) {
         $field.text("Error = " + this.statusText);
