@@ -1,8 +1,33 @@
 
+.images > div {
+	width: 500px;
+	display: table-cell;
+	text-align: center;
+}
+
 .photo {
 	width: 300px;
+	height: 169px;
 }
 
 .checksum {
 
+}
+
+.valid {
+	color: green;
+}
+.valid:after {
+	content: " - valid.";
+}
+
+.invalid {
+	color: red;
+}
+.invalid:after {
+	content: " - failed.";
+}
+
+.error {
+	color: red;
 }

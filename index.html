@@ -7,21 +7,28 @@
 </head>
 <body>
 	<h1>通信最適化 Checker</h1>
-	<h2>HTTP でダウンロードされた画像</h2>
-	<img class="photo" src="photo.jpg" alt="http">
-	<h2>HTTPS でダウンロードされた画像</h2>
-	<img class="photo" src="photo.jpg" alt="https">
 
-	<h2>Checksum Test</h2>
+	<div class="images">
+		<div>
+			<h2>HTTP でダウンロードされた画像</h2>
+			<img id="http-img" class="photo" src="" alt="http">
+		</div>
+		<div>
+			<h2>HTTPS でダウンロードされた画像</h2>
+			<img id="https-img" class="photo" src="" alt="https">
+		</div>
+	</div>
+
+	<h2>Checksum Test (SHA-1)</h2>
 	<div class="checksum">
 		<p id="valid">
 			Valid: <span>3d5399505f9eabbde2765e6f16684feb0986d627</span>
 		</p>
-		<p id="https">
-			HTTPS: <span></span>
-		</p>
 		<p id="http">
 			HTTP: <span></span>
+		</p>
+		<p id="https">
+			HTTPS: <span></span>
 		</p>
 	</div>
 

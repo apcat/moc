@@ -10,15 +10,33 @@ if (location.protocol === "https:") {
 $(function () {
   var valid = $("#valid > span").text();
 
-  ajax("http://" + location.host + location.pathname + "photo.jpg", function () {
-    var hash = shasum(this.response);
-    $("#http > span").text(hash);
-  });
+  function print(protocol) {
+    return function () {
+      var $field = $("#" + protocol + " > span").text(hash);
 
-  ajax("https://" + location.host + location.pathname + "photo.jpg", function () {
-    var hash = shasum(this.response);
-    $("#https > span").text(hash);
-  });
+      if (this.status !== 200) {
+        $field.text("Error = " + this.statusText);
+        $field.addClass("error");
+        return;
+      }
+
+      var bytes = new Uint8Array(this.response);
+      var hash = shasum(bytes);
+      var url = createURL(bytes);
+
+      $("#" + protocol + "-img").attr("src", url);
+
+      $field.text(hash);
+      if (hash === valid) {
+        $field.addClass("valid");
+      } else {
+        $field.addClass("invalid");
+      }
+    };
+  }
+
+  ajax("http://" + location.host + location.pathname + "photo.jpg", print("http"));
+  ajax("https://" + location.host + location.pathname + "photo.jpg", print("https"));
 });
 
 function ajax(url, callback) {
@@ -26,11 +44,11 @@ function ajax(url, callback) {
   xhr.open("get", url, true);
   xhr.responseType = "arraybuffer";
   xhr.addEventListener("load", callback);
+  xhr.addEventListener("error", callback);
   xhr.send();
 }
 
-function shasum(buffer) {
-  var bytes = new Uint8Array(buffer);
+function shasum(bytes) {
   var byte_string = "";
   [].forEach.call(bytes, function (byte) {
     byte_string += String.fromCharCode(byte);
@@ -40,4 +58,9 @@ function shasum(buffer) {
   var binary = CryptoJS.enc.Base64.parse(base64_str);
   var hash = CryptoJS.SHA1(binary);
   return hash.toString();
+}
+
+function createURL(bytes) {
+  var blob = new Blob([bytes], {type: "image/png"});
+  return URL.createObjectURL(blob);
 }
