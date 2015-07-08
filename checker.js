@@ -8,6 +8,8 @@ if (location.protocol === "https:") {
 }
 
 $(function () {
+  $("#ua").text(navigator.userAgent);
+
   var valid = $("#valid > span").text();
 
   function print(protocol) {
